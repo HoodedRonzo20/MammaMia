@@ -58,7 +58,7 @@ MANIFEST = {
     ],
     "resources": ["stream", "catalog", "meta"],
     "types": ["movie", "series", "tv"],
-    "name": "Mamma Mia",
+    "name": "Mamma Mia - Hooded",
     "description": "Addon providing HTTPS Streams for Italian Movies, Series, and Live TV! Note that you need to have Kitsu Addon installed in order to watch Anime",
     "logo": "https://creazilla-store.fra1.digitaloceanspaces.com/emojis/49647/pizza-emoji-clipart-md.png"
 }
