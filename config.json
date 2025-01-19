@@ -1,7 +1,7 @@
 {
     "Siti": {
            "StreamingCommunity": {
-               "domain": "prof",
+               "domain": "ooo",
                "SC_ForwardProxy": "0",
                "SC_PROXY": "0",
                "VX_ForwardProxy": "0",
@@ -78,7 +78,7 @@
        "load_env": "0",
        "HOST": "0.0.0.0",
        "PORT": "8080",
-       "Name": "MammaMia",
+       "Name": "MammaMia - PRIVATE HOST",
        "Icon": "🍕️",
        "Public_Instance": "0",
        "Remote_Instance": "1",

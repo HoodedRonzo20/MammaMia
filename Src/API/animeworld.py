@@ -107,11 +107,14 @@ async def search(showname,date,ismovie,episode,client):
         for ita, eng in months.items():
             release_date = release_date.replace(ita, eng)
         release_date = datetime.datetime.strptime(release_date, "%d %B %Y")
-        date_object = datetime.datetime.strptime(date, "%Y-%m-%d")
+        ##date_object = datetime.datetime.strptime(date, "%Y-%m-%d")
         release_date = release_date.strftime("%Y-%m-%d")
-        if (release_date == date or 
-    release_date == date_object + datetime.timedelta(days=1) or
-    release_date == date_object - datetime.timedelta(days=1)):
+
+        ##controllo se la data è sbagliata di un giorno avanti o indietro
+        yesterday = (datetime.datetime.strptime(release_date, "%Y-%m-%d") - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+        tomorrow = (datetime.datetime.strptime(release_date, "%Y-%m-%d") + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+
+        if date in [release_date, yesterday, tomorrow]:
             anime_url = f'https://www.animeworld.{AW_DOMAIN}{anime["href"]}'
             final_url = await get_mp4(anime_url,ismovie,episode,client)
             if final_url:
