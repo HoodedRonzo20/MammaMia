@@ -380,5 +380,5 @@ async def addon_stream(request: Request,config, type, id,):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run("run:app", host=HOST, port=PORT, log_level="info")
+    uvicorn.run("run:app", host=HOST, port=PORT, log_level="info", reload=True)
     

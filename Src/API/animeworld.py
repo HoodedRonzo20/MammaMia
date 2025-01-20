@@ -86,6 +86,7 @@ async def search(showname,date,ismovie,episode,client):
     search_year = date[:4] 
     headers = random_headers.generate()
     link = f'https://www.animeworld.so/filter?year={search_year}&sort=2&keyword={showname}'
+    print(link)
     response = await client.get(ForwardProxy + link,allow_redirects=True, impersonate = "chrome124", headers = headers, proxies = proxies)
     if response.status_code == 202:
         cookies = await security_cookie(response)
@@ -132,10 +133,15 @@ async def animeworld(id,client):
             episode = id.split(":")[2]
         showname,date = await get_info_kitsu(kitsu_id,client)
         for key in showname_replace:
+
+            #Exeptions
             if key in showname:  # Check if the key is a substring of showname
+                if "Ore dake Level Up na Ken: Season 2 - Arise from the Shadow" in showname:
+                    showname = "Ore dake Level Up na Ken" #works beceuse it excludes the first season checking the date
                 showname = showname.replace(key, showname_replace[key])
                 if "Naruto:" in showname:
                     showname = showname.replace(":", "")
+
         final_urls = await search(showname,date,ismovie,episode,client)
         return final_urls
     except:
