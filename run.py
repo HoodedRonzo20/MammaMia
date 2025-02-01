@@ -303,6 +303,7 @@ async def addon_stream(request: Request,config, type, id,):
                             instance_url = f"{scheme}://{request.url.netloc}"
                             url_streaming_community = url_streaming_community.replace("?","&")
                             url_streaming_community = instance_url + "/vixcloud/manifest.m3u8?d=" + url_streaming_community
+                            print(url_streaming_community)
                             if quality_sc == "1080":
                                 quality_sc = quality_sc.replace("1080","720")
                             streams['streams'].append({"name":f'{Name}\n{quality_sc}p Max', 'title': f'{Icon}StreamingCommunity\n {slug_sc.replace("-"," ").capitalize()}','url': url_streaming_community,'behaviorHints': {'proxyHeaders': {"request": {"user-agent": User_Agent}}, 'notWebReady': False, 'bingeGroup': f'streamingcommunity{quality_sc}'}})

@@ -1,4 +1,4 @@
-
+import traceback
 from bs4 import BeautifulSoup
 import datetime
 import json
@@ -45,12 +45,23 @@ showname_replace = {
     " ": "+",
 }
 async def security_cookie (response):
+    #print(response.text) #debug per verificare che sicurezza ha messo AW
     if "SecurityAW-gl" in response.text:
+        print("SecurityAW-gl bypassed")
         match = re.search(r'SecurityAW-gl=([^;]+)', response.text)
         characters = "gl"
     elif "SecurityAW-Ec" in response.text:
+        print("SecurityAW-Ec bypassed")
         match = re.search(r'SecurityAW-Ec=([^;]+)', response.text)
         characters = "Ec"
+    elif "SecurityAW-E4" in response.text:
+        print("SecurityAW-E4 bypassed")
+        match = re.search(r'SecurityAW-E4=([^;]+)', response.text)
+        characters = "E4"
+    elif "SecurityAW-Bs" in response.text:
+        print("SecurityAW-Bs bypassed")
+        match = re.search(r'SecurityAW-Bs=([^;]+)', response.text)
+        characters = "Bs"
     if match:
         Security_Cookie = match.group(1).strip()
         cookies = {
@@ -144,8 +155,9 @@ async def animeworld(id,client):
 
         final_urls = await search(showname,date,ismovie,episode,client)
         return final_urls
-    except:
-        print("Animeworld failed")
+    except Exception as e:
+        print(f"Animeworld failed: {e}")
+        traceback.print_exc()
         return None
 
 async def test_animeworld():
