@@ -273,15 +273,18 @@ async def addon_stream(request: Request,config, type, id,):
                     animeworld_urls = await animeworld(id,client)
                     if animeworld_urls:
                         print(f"AnimeWorld Found Results for {id}")
-                        i = 0
                         for url in animeworld_urls:
                             if url:
-                                if i == 0:
-                                    title = "Original"
-                                elif i == 1:
-                                     title = "Italian"
-                                streams['streams'].append({'title': f'{Icon}Animeworld {title}', 'url': url})
-                                i+=1
+                                # Estrai il nome del file dall'URL e rimuovi ".mp4"
+                                filename = url.split('/')[-1].replace('.mp4', '')
+                                # Sposta "ITA" o "SUB_ITA" all'inizio del titolo con modifiche richieste
+                                if "SUB_ITA" in filename:
+                                    title = "SUB - " + filename.replace('_SUB_ITA', '')
+                                elif "ITA" in filename:
+                                    title = "ITA - " + filename.replace('_ITA', '')
+                                else:
+                                    title = filename
+                                streams['streams'].append({'title': title, 'url': url})
             else:
                 if MYSTERIUS == "1":
                     results = await cool(id,client)
@@ -381,5 +384,5 @@ async def addon_stream(request: Request,config, type, id,):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run("run:app", host=HOST, port=PORT, log_level="info")
+    uvicorn.run("run:app", host=HOST, port=PORT, log_level="info", reload=True)
     
