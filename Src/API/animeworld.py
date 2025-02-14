@@ -44,6 +44,7 @@ showname_replace = {
     "Shippuuden": "Shippuden",
     " ": "+",
     "Solo+Leveling+2": "Solo+Leveling+2:",
+    "Shangri-La+Frontier": "La Frontier",
     "-": ""
 }
 async def security_cookie (response):
@@ -91,6 +92,7 @@ async def search(showname,date,ismovie,episode,client):
     search_year = date[:4] 
     headers = random_headers.generate()
     link = f'https://www.animeworld.so/filter?year={search_year}&sort=2&keyword={showname}'
+    print(link)
     response = await client.get(ForwardProxy + link,allow_redirects=True, impersonate = "chrome124", headers = headers, proxies = proxies)
     if response.status_code == 202:
         cookies = await security_cookie(response)
@@ -137,7 +139,7 @@ async def animeworld(id,client):
             if key in showname:  # Check if the key is a substring of showname
                 showname = showname.replace(key, showname_replace[key])
                 if "Naruto:" in showname:
-                    showname = showname.replace(":", "")
+                    showname = showname.replace(":", "")           
         final_urls = await search(showname,date,ismovie,episode,client)
         return final_urls
     except Exception as e:

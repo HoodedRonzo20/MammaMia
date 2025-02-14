@@ -162,7 +162,8 @@ async def get_info_kitsu(kitsu_id,client):
     api_url = f'https://kitsu.io/api/edge/anime/{kitsu_id}'
     response = await client.get(api_url)
     data = json.loads(response.text)
-    showname = data['data']['attributes']['titles']['en']
+    #if en title is not present I take en_jp
+    showname = data['data']['attributes']['titles'].get('en', data['data']['attributes']['titles'].get('en_jp'))
     date = data['data']['attributes']['startDate']
     return showname,date           
 
