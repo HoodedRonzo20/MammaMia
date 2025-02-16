@@ -20,7 +20,7 @@ HTML = """
             font-size: 2.2vh;
             font-family: 'Open Sans', Arial, sans-serif;
             color: white;
-            background: url('https://i.postimg.cc/m2ZqvpZj/italian-seamless-free-vector-pattern3.png') center center repeat;
+            background: #333 center center repeat;
             background-size: cover;
             display: flex;
             align-items: flex-start;

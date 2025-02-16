@@ -378,6 +378,9 @@ async def addon_stream(request: Request,config, type, id,):
         if not streams['streams']:
             raise HTTPException(status_code=404)
 
+    print("URL Streams:")
+    #print every url on the Streams
+    print('\n'.join([stream['url'] for stream in streams['streams']]))
     return respond_with(streams)
 
 
