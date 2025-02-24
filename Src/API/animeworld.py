@@ -44,6 +44,7 @@ showname_replace = {
     "Shippuuden": "Shippuden",
     " ": "+",
     "Solo+Leveling+2": "Solo+Leveling+2:",
+    "Shangri-La+Frontier": "La Frontier",
     "-": ""
 }
 async def security_cookie (response):
@@ -91,6 +92,7 @@ async def search(showname,date,ismovie,episode,client):
     search_year = date[:4] 
     headers = random_headers.generate()
     link = f'{AW_DOMAIN}/filter?year={search_year}&sort=2&keyword={showname}'
+    print(link)
     response = await client.get(ForwardProxy + link,allow_redirects=True, impersonate = "chrome124", headers = headers, proxies = proxies)
     if response.status_code == 202:
         cookies = await security_cookie(response)
