@@ -11,7 +11,7 @@ RUN apt-get update && \
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir pytesseract
 
-EXPOSE 8080
+EXPOSE 8000
 
 # Run run.py when the container launches
 ENTRYPOINT ["python","run.py"]

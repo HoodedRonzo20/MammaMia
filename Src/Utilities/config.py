@@ -2,7 +2,7 @@
 import json
 import logging
 # Open the configuration file
-with open('config.json') as f:
+with open('config.json', encoding='utf-8') as f:
     # Load JSON data from file
     config = json.load(f)
 

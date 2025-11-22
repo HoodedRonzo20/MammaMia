@@ -317,6 +317,15 @@ async def addon_stream(request: Request,config, type, id,):
                     streams = await guardoserie(streams,id,client,MFP,MFP_CREDENTIALS)
                 if provider_maps['REALTIME'] == '1' and RT == '1':
                     streams = await streams_realtime(streams,id,client)
+
+            for stream in streams['streams']:
+                # Controlla se 'Vixcloud' è presente nel titolo dello stream
+                if 'Vixcloud' in stream.get('title', ''):
+                    # Rimuove la chiave 'behaviorHints' solo per quello stream
+                    stream.pop('behaviorHints', None)
+                    stream.pop('notWebReady', None)
+                    
+            print(streams)
             return respond_with(streams)
         if not streams['streams']:
             raise HTTPException(status_code=404)
@@ -326,4 +335,4 @@ async def addon_stream(request: Request,config, type, id,):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run("run:app", host=HOST, port=PORT, log_level=level)    
+    uvicorn.run("run:app", host=HOST, port=PORT, log_level=level, reload=True)    

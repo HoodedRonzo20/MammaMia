@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  mammamia:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mammamia-container
+    ports:
+      - "8000:8000"
+    networks:
+      - https_net
+    restart: unless-stopped
+    # Opzionale: se vuoi montare volumi per lo sviluppo
+    # volumes:
+    #   - .:/app
+    # Opzionale: variabili d'ambiente
+    # environment:
+    #   - ENV_VAR=value
+
+networks:
+  https_net:
+    external: true
