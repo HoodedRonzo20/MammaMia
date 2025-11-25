@@ -23,7 +23,7 @@
       "enabled": "1"
     },
     "Guardaserie": {
-      "url": "https://guardaserietv.wtf",
+      "url": "https://guardaserietv.cfd",
       "enabled": "1",
       "GS_ForwardProxy": "0",
       "GS_PROXY": "0"
@@ -35,7 +35,7 @@
       "GH_PROXY": "0"
     },
     "Eurostreaming": {
-      "url": "https://eurostreamings.fun",
+      "url": "https://eurostreamings.pics",
       "enabled": "1",
       "ES_ForwardProxy": "0",
       "ES_PROXY": "0"
