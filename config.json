@@ -66,10 +66,10 @@
     }
   },
   "General": {
-    "load_env": "1",
+    "load_env": "0",
     "HOST": "0.0.0.0",
-    "PORT": 8000,
-    "Name": "LOCAL -MammaMia",
+    "PORT": 8080,
+    "Name": "MammaMia",
     "Icon": "🍕️",
     "level": "info",
     "Global_Proxy": "0"
