@@ -1,3 +1,5 @@
 .env
 __pycache__/
 .vercel
+update_domains.py
+update_domains.yml
