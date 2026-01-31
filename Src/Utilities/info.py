@@ -218,6 +218,7 @@ async def get_info_kitsu(kitsu_id,client):
     except Exception as e:
         showname = data['data']['attributes']['canonicalTitle']
     date = data['data']['attributes']['startDate']
+    print("info_kitsu results=",date,showname)
     return showname,date           
 
 

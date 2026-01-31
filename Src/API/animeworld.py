@@ -46,6 +46,9 @@ months = {
         "Ottobre": "October", "Novembre": "November", "Dicembre": "December"
     }
 showname_replace = {
+    "My Hero Academia Final Season": "Boku no Hero Academia: Final Season",
+    "One-Punch Man 3": "One Punch Man 3",
+    "One-Punch Man 2": "One Punch Man 2",
     "Attack on Titan": "L'attacco dei Giganti",
     "Season": "",
     "  ": " ",
@@ -100,11 +103,28 @@ async def get_mp4(anime_url,ismovie,episode,client,i,streams):
 
 
 
+def check_date_match(showname, release_date_object, date_object, date):
+    """
+    Check if release date matches the expected date.
+    Includes special exceptions for specific anime with different date tolerances.
+    """
+    # Special exception for One Punch Man 2 (Italian version has ~10 days difference)
+    if "One+Punch+Man+2" in showname:
+        date_diff = abs((release_date_object - date_object).days)
+        return date_diff <= 15
+    
+    # Default: ±1 day tolerance
+    release_date = release_date_object.strftime("%Y-%m-%d")
+    return (release_date == date or 
+            release_date == (date_object + datetime.timedelta(days=1)).strftime("%Y-%m-%d") or
+            release_date == (date_object - datetime.timedelta(days=1)).strftime("%Y-%m-%d"))
+
 
 async def search(showname,date,ismovie,episode,client,streams):
     search_year = date[:4] 
     headers = random_headers.generate()
     link = f'{AW_DOMAIN}/filter?year={search_year}&sort=2&keyword={showname}'
+    print(link)
     response = await client.get(ForwardProxy + link,allow_redirects=True, impersonate = "chrome124", headers = headers, proxies = proxies)
     if response.status_code == 202:
         cookies = await security_cookie(response)
@@ -127,10 +147,8 @@ async def search(showname,date,ismovie,episode,client,streams):
             release_date = release_date.replace(ita, eng)
         release_date_object = datetime.datetime.strptime(release_date, "%d %B %Y")
         date_object = datetime.datetime.strptime(date, "%Y-%m-%d")
-        release_date = release_date_object.strftime("%Y-%m-%d")
-        if (release_date == date or 
-    release_date == (datetime.datetime.strptime(date, "%Y-%m-%d") + datetime.timedelta(days=1)).strftime("%Y-%m-%d") or
-    release_date == (datetime.datetime.strptime(date, "%Y-%m-%d") - datetime.timedelta(days=1)).strftime("%Y-%m-%d")):
+        
+        if check_date_match(showname, release_date_object, date_object, date):
             anime_url = f'{AW_DOMAIN}{anime["href"]}'
             streams = await get_mp4(anime_url,ismovie,episode,client,i,streams)
             i+=1
