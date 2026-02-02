@@ -96,9 +96,17 @@ async def get_mp4(anime_url,ismovie,episode,client,i,streams):
     if url:
         if i == 0:
             language = "Original"
+            lang_key = "original"
         elif i == 1:
             language = "Italian"
-        streams['streams'].append({'title': f'{Icon}Animeworld {language}', 'url': url,'behaviorHints': {'bingeGroup': 'animeworld'}})
+            lang_key = "italian"
+        else:
+            language = "Unknown"
+            lang_key = "other"
+
+        # Use a language-aware bingeGroup so next-episode keeps the same language
+        binge_group = f"animeworld:{lang_key}"
+        streams['streams'].append({'title': f'{Icon}Animeworld {language}', 'url': url, 'behaviorHints': {'bingeGroup': binge_group}})
     return streams
 
 
