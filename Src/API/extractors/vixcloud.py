@@ -28,7 +28,13 @@ async def vixcloud(link,client,MFP,MFP_CREDENTIALS,streams,site_name,proxies,For
     headers['Origin'] = f"{SC_DOMAIN}"
     headers['User-Agent'] = User_Agent
     headers['user-agent'] = User_Agent
-    response = await client.get(link)        
+
+    # I will get real link from API 
+    parts = link.split(SC_DOMAIN)
+    response = await client.get(SC_DOMAIN + '/api' + parts[1])
+    link = SC_DOMAIN + '/' + response.json()['src']
+    response = await client.get(link,headers=headers)   
+
     if response.status_code != 200:
         logger.warning(f"Failed to extract URL components from VixSRC, Invalid Request: {response.status_code}") 
     soup = BeautifulSoup(response.text, "lxml", parse_only=SoupStrainer("body"))
