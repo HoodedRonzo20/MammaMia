@@ -81,15 +81,15 @@ async def get_mp4(anime_url,ismovie,episode,client,i,streams):
         episode_page = soup.find('a', {'data-episode-num':episode })
         if episode_page is None:
             return streams
-        episode_page = f'{AW_DOMAIN}{episode_page["href"]}'
+        episode_page = f'{AW_DOMAIN}/api/episode/serverPlayerAnimeWorld?id={episode_page["href"].split("/")[-1]}'
         response = await client.get(ForwardProxy + episode_page,allow_redirects=True, cookies = cookies,impersonate = "chrome124", proxies=proxies)
         if response.status_code == 202:
             cookies = await security_cookie(response)
             response = await client.get(ForwardProxy + episode_page,allow_redirects=True, cookies = cookies,impersonate = "chrome124", proxies=proxies)
         soup = BeautifulSoup(response.text,'lxml')
 
-    a_tag  = soup.find('a', {'id': 'alternativeDownloadLink', 'class': 'm-1 btn btn-sm btn-primary'}) 
-    url = a_tag['href']
+    a_tag  = soup.find('source')
+    url = a_tag['src']
     response = await client.head(url)
     if response.status_code == 404:
         url = None
